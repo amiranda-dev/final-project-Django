@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block titulo_conteudo %} Detalhes da Categoria {% endblock %}
+
+{% block conteudo %}
+<div class="card">
+    <div class="card-header">
+        <h4>Detalhes da Categoria</h4>
+    </div>
+    <div class="card-body">
+        <div class="form-group mb-3">
+            <label>ID:</label>
+            <input type="text" class="form-control" value="{{ item.id }}" disabled>
+        </div>
+        <div class="form-group mb-3">
+            <label>Nome:</label>
+            <input type="text" class="form-control" value="{{ item.nome }}" disabled>
+        </div>
+        <div class="form-group mb-3">
+            <label>Ordem:</label>
+            <input type="text" class="form-control" value="{{ item.ordem }}" disabled>
+        </div>
+        <hr>
+        <a href="{% url 'categoria' %}" class="btn btn-secondary">Voltar para Listagem</a>
+    </div>
+</div>
+{% endblock %}
