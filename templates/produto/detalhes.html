@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block titulo_conteudo %} Detalhes do Produto {% endblock %}
+
+{% block conteudo %}
+<div class="card">
+    <div class="card-header">
+        <h4>Detalhes do Produto</h4>
+    </div>
+    <div class="card-body">
+        <div class="form-group mb-3">
+            <label>ID:</label>
+            <input type="text" class="form-control" value="{{ item.id }}" disabled>
+        </div>
+        
+        <div class="form-group mb-3">
+            <label>Nome:</label>
+            <input type="text" class="form-control" value="{{ item.nome }}" disabled>
+        </div>
+        
+        <div class="form-group mb-3">
+            <label>Preço (R$):</label>
+            <input type="text" class="form-control" value="{{ item.preco }}" disabled>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="d-block">Imagem do Produto:</label>
+            {% if item.img_base64 %}
+                <img src="{{ item.img_base64 }}" class="img-thumbnail" style="max-width: 300px; border: 1px solid #ddd;">
+            {% else %}
+                <p class="text-muted italic">Nenhuma imagem cadastrada para este produto.</p>
+            {% endif %}
+        </div>
+
+        <hr>
+        <a href="{% url 'produto' %}" class="btn btn-secondary">Voltar para Listagem</a>
+    </div>
+</div>
+{% endblock %}
