@@ -86,6 +86,19 @@ class Pedido(models.Model):
 
     def __str__(self):
             return f"Pedido {self.id} - Cliente: {self.cliente.nome} - Status: {self.get_status_display()}"
+        
+        
+        
+    @property
+    def total(self):
+        """Soma o total de todos os itens do pedido [cite: 69]"""
+        total_pedido = sum(item.total for item in self.itempedido_set.all())
+        return total_pedido
+
+    @property
+    def qtdeItens(self):
+        """Conta a quantidade de tipos de itens no pedido [cite: 69]"""
+        return self.itempedido_set.count()
 
 # home/ItemPedido.py
 class ItemPedido(models.Model):
@@ -97,7 +110,7 @@ class ItemPedido(models.Model):
 
     def __str__(self):
         return f"{self.produto.nome} (Qtd: {self.qtde}) - Preço Unitário: {self.preco}"  
-
-        
-        
-
+    @property
+    def total(self):
+        """Calcula o total do item: quantidade x preço [cite: 74, 75]"""
+        return self.qtde * self.preco

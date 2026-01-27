@@ -12,26 +12,36 @@
 <form method="post">
     {% csrf_token %}    
 
-
     <p>
-      <label for="id_cliene">Cliente:</label>
-      <span class="form-control" >{{form.instance.cliente.nome}}</span>
-  
+        <label>Cliente:</label>
+        <span class="form-control" readonly>{{ item.pedido.cliente.nome }}</span>
     </p>
+
     <p>
-      <label for="id_data">Data:</label>
-      <span class="form-control" >{{ data_atual|date:"d/m/Y H:i" }}</span>
-     </p>
+        <label>Produto:</label>
+        <span class="form-control" readonly>{{ item.produto.nome }}</span>
+    </p>
   
     <p>
-      <label for="id_status">Status:</label>
-      <span class="form-control" >{{form.instance.get_status_display}}</span>
-     </p>    
+        <label>Status do Pedido:</label>
+        <span class="form-control" readonly>{{ item.pedido.get_status_display }}</span>
+    </p>    
 
-
-    {{ form.as_p }}
+    <p>
+        <label for="{{ form.qtde.id_for_label }}">Quantidade:</label>
+        {{ form.qtde }}
+        {% if form.qtde.errors %}
+            <div class="text-danger">{{ form.qtde.errors }}</div>
+        {% endif %}
+    </p>
     
-    <button class="btn btn-primary btn-sm" type="submit">Salvar</button>
+    <div style="display:none">
+        {{ form.produto }}
+        {{ form.pedido }}
+    </div>
+
+    <button class="btn btn-primary btn-sm" type="submit">Salvar Alterações</button>
+    <a href="{% url 'detalhes_pedido' item.pedido.id %}" class="btn btn-secondary btn-sm">Cancelar</a>
 </form>
 
 

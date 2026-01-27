@@ -93,11 +93,10 @@ class PedidoForm(forms.ModelForm):
 class ItemPedidoForm(forms.ModelForm):
     class Meta:
         model = ItemPedido
-        fields = ['pedido','produto', 'qtde']
+        fields = ['produto', 'qtde']
 
 
         widgets = {
-            'pedido': forms.HiddenInput(),  # Campo oculto para armazenar o ID
             'produto': forms.HiddenInput(),  # Campo oculto para armazenar o ID
             'qtde':forms.TextInput(attrs={'class': 'form-control',}),
         }
