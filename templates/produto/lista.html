@@ -14,25 +14,19 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Produto</th>
+        <th>#</th>
         <th>Nome</th>
         <th>Preço(R$)</th>
         <th>Categoria</th>
         <th>Qtde</th>
-         <th>Ações</th>
+        <th>Ações</th>
       </tr>
     </thead>
     <tbody>
     {% for produto in lista %}
       <tr>
         <td>{{ produto.id }}</td>
-        <td>
-            {% if produto.img_base64 %}
-                <img src="{{ produto.img_base64 }}" width="80" height="80">
-            {% else %}
-                <span class="text-muted" style="font-size: 0.7rem;">Sem foto</span>
-            {% endif %}
-        </td>
+        <td><img  src="{{produto.img_base64}} " height="30"></td>
         <td>{{ produto.nome }}</td>
         <td>{{ produto.preco}}</td>
         <td>{{ produto.categoria }}</td>

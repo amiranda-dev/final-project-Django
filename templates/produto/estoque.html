@@ -1,16 +1,8 @@
 {% extends "base.html" %}
 
-
 {% block titulo_conteudo %} Ajuste de Estoque {% endblock titulo_conteudo %}
 
-
 {% block conteudo %} 
-
-<p>
-    <label for="id_produto">Produto:</label>
-    <span class="form-control" >{{form.instance.produto.id}}</span>
-</p>
-
 <p>
     <label for="id_produto">Produto:</label>
     <span class="form-control" >{{form.instance.produto.nome}}</span>
@@ -21,6 +13,5 @@
     <button class="btn btn-primary btn-sm" type="submit">Salvar</button>
 </form>
 {% endblock conteudo %}
-
 
 {% block javascript %}{% endblock javascript %}

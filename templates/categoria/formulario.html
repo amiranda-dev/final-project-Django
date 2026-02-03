@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
+{% block titulo  %} Contato {% endblock %}
 
-{% block titulo_conteudo  %} Formulário de Categoria {% endblock %}
-
+{% block titulo_conteudo %} Formulário de Categoria {% endblock %}
 
 {% block conteudo  %}  
 
-<form method="post" action="">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn btn-primary mt-4" type="submit">Salvar</button>
-    <button type="location' {% url "categoria" %}' " class="btn btn-secondary mt-4">Voltar</button>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }} <!-- Renderiza cada campo do formulário com <p> tags -->
+       <button class="btn btn-primary" type="submit">Enviar</button>
+    </form>
 
-    {% endblock %}
+{% endblock %}
