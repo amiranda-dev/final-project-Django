@@ -1,25 +1,19 @@
 {% extends "base.html" %}
 
+
 {% block titulo_conteudo %} Isso é um teste {% endblock titulo_conteudo %}
 
-{% block conteudo %} 
 
+{% block conteudo %} 
 <p>
 <label for="estado">Digite um Estado: </label>
-<input type="text" class="autocomplete" > 
+<input type="text" id="estado">
 </p>
-<p>
-<label for="estado">Digite outro Estado: </label>
-<input type="text" class="autocomplete" >
-</p>
-<p>
-<label for="estado">Digite mais um Estado: </label>
-<input type="text" class="autocomplete" >
-</p>
-
 {% endblock conteudo %}
 
+
 {% block javascript %}
+
 
 <script>
     $(document).ready(function () {
@@ -32,12 +26,14 @@
             "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", 
             "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"
         ];
-        // Ativando o autocomplete no campo
 
-        $(".autocomplete").autocomplete({
+
+        // Ativando o autocomplete no campo
+        $("#estado").autocomplete({
             source: estados // Fonte de dados para o autocomplete
         });
     });
 </script>
+
 
 {% endblock javascript %}

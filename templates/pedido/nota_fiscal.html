@@ -5,48 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nota Fiscal - Pedido {{ pedido.id }}</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            font-size: 12px;
-        }
-        .container {
-            width: 800px;
-            margin: auto;
-            border: 1px solid black;
-            padding: 10px;
-        }
-        .header, .footer {
-            text-align: center;
-            font-weight: bold;
-        }
-        .box {
-            border: 1px solid black;
-            padding: 5px;
-            margin-bottom: 5px;
-        }
-        .details-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .details-table th, .details-table td {
-            border: 1px solid black;
-            padding: 5px;
-            text-align: left;
-        }
-        .details-table th {
-            background-color: #f0f0f0;
-        }
-        .small-text {
-            font-size: 10px;
-        }
-        .total {
-            font-weight: bold;
-            margin-top: 10px;
-        }
-        .no-print {
-            text-align: center;
-            margin-top: 20px;
-        }
+        body { font-family: Arial, sans-serif; font-size: 12px; }
+        .container { width: 800px; margin: auto; border: 1px solid black; padding: 10px; }
+        .header, .footer { text-align: center; font-weight: bold; }
+        .box { border: 1px solid black; padding: 5px; margin-bottom: 5px; }
+        .details-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+        .details-table th, .details-table td { border: 1px solid black; padding: 5px; text-align: left; }
+        .details-table th { background-color: #f0f0f0; }
+        .small-text { font-size: 10px; }
+        .no-print { text-align: center; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -60,43 +27,51 @@
 
         <div class="box">
             <strong>Destinatário:</strong> {{ pedido.cliente.nome }}<br>
-            <strong>CPF/CNPJ:</strong> {{ pedido.cliente.cpf }}<br>
-            <strong>Endereço:</strong> {{ pedido.cliente.endereco }}
+            <strong>Data Nascimento:</strong> {{ pedido.cliente.datanascimento }}<br>            
+            <strong>CPF/CNPJ:</strong> {{ pedido.cliente.cpf }}
         </div>
 
-        <div class="box">
-            <table class="details-table">
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Descrição</th>
-                        <th>Qtd</th>
-                        <th>Valor Unitário</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in pedido.itempedido_set.all %}
-                    <tr>
-                        <td>{{ item.produto.id }}</td>
-                        <td>{{ item.produto.nome }}</td>
-                        <td>{{ item.qtde }}</td>
-                        <td class="small-text">R$ {{ item.preco }}</td>
-                        <td class="small-text">R$ {{ item.total }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <table class="details-table">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Descrição</th>
+                    <th>Qtd</th>
+                    <th>Valor Unitário</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in pedido.itempedido_set.all %}
+                <tr>
+                    <td>{{ item.produto.id }}</td>
+                    <td>{{ item.produto.nome }}</td>
+                    <td>{{ item.qtde }}</td>
+                    <td class="small-text">R$ {{ item.preco|floatformat:2 }}</td>
+                    <td class="small-text">R$ {{ item.total|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div style="font-family:monospace" class="box">
+            <div style="display: flex; justify-content: space-between;">
+                <div><strong>ICMS.......:</strong> R$ {{ pedido.icms|floatformat:2 }}</div>
+                <div><strong>IPI........:</strong> R$ {{ pedido.ipi|floatformat:2 }}</div>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <div><strong>PIS........:</strong> R$ {{ pedido.pis|floatformat:2 }}</div>
+                <div><strong>COFINS.....:</strong> R$ {{ pedido.cofins|floatformat:2 }}</div>
+            </div>
         </div>
 
-        <div class="box">
-            <strong>Total:</strong> R$ {{ pedido.total }}<br>
-            <strong>Impostos:</strong> R$ {{ pedido.imposto }}<br>
-            <strong>Valor Final:</strong> R$ {{ pedido.total_com_imposto }}
+        <div style="font-family:monospace" class="box">
+            <strong>Total......:</strong> R$ {{ pedido.total|floatformat:2 }}<br>
+            <strong>Impostos...:</strong> R$ {{ pedido.total_impostos|floatformat:2 }}<br>
+            <strong>Valor Final:</strong> R$ {{ pedido.valor_final|floatformat:2 }}
         </div>
 
         <div class="footer">Recebemos os produtos constantes nesta nota fiscal.</div>
-
     </div>
 
     <div class="no-print">
@@ -109,16 +84,13 @@
     <script>
         function gerarPDF() {
             const { jsPDF } = window.jspdf;
-    
             html2canvas(document.querySelector('.container')).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
                 const doc = new jsPDF('p', 'mm', 'a4');
-    
                 doc.addImage(imgData, 'PNG', 10, 10, 190, 0);
-                doc.save('NotaFiscal.pdf');
+                doc.save('NotaFiscal_{{ pedido.id }}.pdf');
             });
         }
     </script>
-
 </body>
 </html>

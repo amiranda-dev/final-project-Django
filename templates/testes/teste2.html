@@ -1,43 +1,38 @@
 {% extends "base.html" %}
 
-{% block titulo_conteudo %} Isso é um teste {% endblock titulo_conteudo %}
+{% block titulo_conteudo %} Teste 2 - Autocomplete {% endblock %}
 
 {% block conteudo %} 
+<div class="card-body">
+    <p>
+        <label for="id_categoria_nome">Categoria:</label>
+        <input type="text" class="form-control autocomplete" id="id_categoria_nome" 
+               data-url="{% url 'buscar_dados' 'home.Categoria' %}" data-hidden="#id_categoria">
+        <input type="hidden" id="id_categoria">
+    </p>
 
-<p>
-    <nome for="estado">Digite um estado: </nome>
-    <input type="text" data-hidden="#idestado" class="autocomplete">
-    <input type="hidden" id="idestado">
-</p>
+    <p>
+        <label for="id_produto_nome">Produto:</label>
+        <input type="text" class="form-control autocomplete" id="id_produto_nome" 
+               data-url="{% url 'buscar_dados' 'home.Produto' %}" data-hidden="#id_produto">
+        <input type="hidden" id="id_produto">
+    </p>
 
+    <p>
+        <label for="id_cliente_nome">Cliente:</label>
+        <input type="text" class="form-control autocomplete" id="id_cliente_nome" 
+               data-url="{% url 'buscar_dados' 'home.Cliente' %}" data-hidden="#id_cliente">
+        <input type="hidden" id="id_cliente">
+    </p>
+</div>
 {% endblock conteudo %}
 
 {% block javascript %}
-
-<script>
-    $(document).ready(function () {
-        // Lista de países
-        const estados = [
-            { id: 1, label: "Piauí" },
-            { id: 2, label: "Rio de Janeiro" },
-            { id: 3, label: "Minas Gerais" },
-            { id: 4, label: "Bahia" },
-            { id: 5, label: "Paraná" }
-     ];
-           // Ativando o autocomplete no campo
-           $(".autocomplete").autocomplete({
-            source: estados, // Fonte de dados
-            minLength: 1, // Número mínimo de caracteres para ativar o autocomplete
-            select: function (event, ui) {
-                // Quando o item é selecionado:
-                $(this).val(ui.item.label); // Define o texto no campo
-                 var campo_hidden = $(this).data('hidden'); // pega o campo hidden associado ao input
-                 $(campo_hidden).val(ui.item.id); // Define o ID no campo oculto
-                return false; // Evita que o valor padrão do autocomplete seja inserido
-            }
+{% comment %} <script>
+    $(document).ready(function() {
+        $('.autocomplete').each(function() {
+            autoComplete(this); 
         });
     });
-    
-</script>
-
+</script> {% endcomment %}
 {% endblock javascript %}

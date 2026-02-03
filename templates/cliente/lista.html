@@ -1,45 +1,42 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
-{% block titulo_conteudo %} Listagem de Clientes {% endblock titulo_conteudo %}
+{% block titulo_conteudo %} Listagem de Clientes {% endblock %}
 
-{% block conteudo %} 
+{% block conteudo %}  
+<button onclick="location.href='{% url 'form_cliente' %}'" class="btn btn-primary">Inserir Novo</button>
+<button onclick="location.href='{% url 'cliente' %}'"  class="btn btn-primary">Recarregar</button>
 
-<div class="barrabotoes">
-  <button onClick="location='{% url "form_cliente" %}'" type="button" class="btn btn-primary btn-sm">Inserir Novo</button>
-  <button onClick="location='{% url "cliente" %}'" type="button" class="btn btn-primary btn-sm">Recarregar</button>
-</div>
-
-<table class="table table-hover">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>C.P.F</th>
-        <th>Endereço</th> <th>Data Nascimento</th>
-        <th>Ações</th>
-      </tr>
+<table style="margin-top:15px" class="table table-bordered table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nome</th>
+            <th scope="col">CPF</th>
+            <th scope="col">Data Nascimento</th>
+            <th scope="col">Ações</th>  
+        </tr>
     </thead>
+    
     <tbody>
-    {% for cliente in lista %}
-      <tr>
-        <td>{{ cliente.id }}</td>
-        <td>{{ cliente.nome }}</td>
-        <td>{{ cliente.cpf }}</td>
-        <td>{{ cliente.endereco|default:"Não informado" }}</td> <td>{{ cliente.datanascimento }}</td>
-        <td>
-          <button 
-              onClick="location='{% url 'novo_pedido' cliente.id %}'" 
-              type="button" class="btn btn-primary btn-sm">Novo Pedido
-          </button>
-         
-          <a href="{% url 'editar_cliente' cliente.id %}" class="btn btn-warning btn-sm">Editar</a>
- 
-          <a href="{% url 'remover_cliente' cliente.id %}" class="btn btn-danger btn-sm" 
-          onclick="return confirm('Tem certeza que deseja remover este registro?');">Remover</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-
-{% endblock conteudo %}
+        {% for item in lista %}
+        <tr>
+            <td>{{item.id}}</td>
+            <td>{{item.nome}}</td>
+            <td>{{item.cpf}}</td>
+            <td>{{item.datanascimento}}</td>
+            <td> 
+                <button 
+                    onClick="location='{% url 'novo_pedido' item.id %}'" 
+                    type="button" class="btn btn-primary btn-sm">Novo Pedido
+                </button>                
+                
+                <button onclick="location='{% url 'detalhes_cliente' item.id %}'" class="btn btn-info btn-sm">Detalhes </button>
+                <button onclick="location='{% url 'editar_cliente' item.id %}'"  class="btn btn-warning btn-sm">Editar</button>
+                <a href="{% url 'remover_cliente' item.id %}" class="btn btn-danger btn-sm" 
+                   onclick="return confirm('Tem certeza que deseja remover este registro?');">Remover</a>
+            </td> 
+        </tr>
+        {% endfor %}
+     </tbody>
+</table>
+{% endblock %}

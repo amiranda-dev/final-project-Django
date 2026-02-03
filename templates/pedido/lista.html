@@ -1,13 +1,18 @@
 {% extends "base.html" %}
 
+
 {% block titulo_conteudo %} Listagem de Pedidos {% endblock titulo_conteudo %}
 
+
 {% block conteudo %} 
+
 
 <div class="barrabotoes">
   <button onClick="location='{% url "pedido" %}'" type="button" class="btn btn-primary btn-sm">Recarregar</button>
 
+
 </div>
+
 
 <table class="table table-hover">
     <thead>
@@ -25,21 +30,23 @@
     <tbody>
     {% for pedido in lista %}
       <tr>
-        <td>{{ pedido.id }}</td>
-        <td>{{ pedido.cliente.nome }}</td>
-        <td>{{ pedido.data_pedidof}}</td>
-        <td>{{ pedido.get_status_display }}</td>
-        <td>{{ pedido.qtdeItens }}</td>  
-        <td>{{ pedido.total }}</td>      
-        <td>
-          <button onClick="location='{% url 'detalhes_pedido' pedido.id %}'" type="button" class="btn btn-primary btn-sm">Detalhes</button>
-          <a href="" class="btn btn-danger btn-sm" 
-          onclick="return confirm('Tem certeza que deseja remover este registro?');">Remover</a>
-        </td>
+    <td>{{ pedido.id }}</td>
+    <td>{{ pedido.cliente.nome }}</td>
+    <td>{{ pedido.data_pedidof }}</td>
+    <td>{{ pedido.get_status_display }}</td>
+    <td>{{ pedido.qtdeItens }}</td> <td>{{ pedido.total|floatformat:2 }}</td> <td>
+      <button onClick="location='{% url 'detalhes_pedido' pedido.id %}'" class="btn btn-primary btn-sm">Detalhes</button>
+      <a href="{% url 'nota_fiscal' pedido.id %}" target="_blank" class="btn btn-info btn-sm">
+        Nota Fiscal
+    </a>
+      <a href="{% url 'remover_item_pedido' pedido.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Excluir pedido?')">Remover</a>
+      </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
+
+
 
 
 {% endblock conteudo %}

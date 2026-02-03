@@ -1,16 +1,14 @@
 {% extends 'base.html' %}
 
-{% block titulo_conteudo  %} Listagem de Categoria {% endblock %}
+{% block titulo_conteudo %} Listagem de Categoria {% endblock %}
 
-{% block conteudo  %}  
+{% block conteudo %}  
 
-<button onclick="location.href='{% url 'form_categoria' %}'"  class="btn btn-primary">Nova Categoria </button>
-
-<button onclick="location.href='{% url 'categoria' %}'"  class="btn btn-primary">Recarregar </button>
+<button onclick="location.href='{% url "form_categoria" %}'" class="btn btn-primary">Nova Categoria</button>
+<button onclick="location.reload()" class="btn btn-primary">Recarregar</button> 
 
 <table style="margin-top:15px" class="table table-bordered table-hover">
     <thead class="thead-dark">
-
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Descrição</th>
@@ -23,21 +21,20 @@
         {% for item in lista %}
         <tr>
             <td>{{item.id}}</td>
-            <td> {{item.nome}} </td>
-            <td> {{item.ordem}} </td>
+            <td>{{item.nome}}</td>
+            <td>{{item.ordem}}</td>
             <td> 
-                <button onclick="location='{% url "detalhes_categoria" item.id %}'" class="btn btn-info">Detalhes </button>
-                <button onclick="location='{% url "editar_categoria" item.id %}'"  class="btn btn-warning">Alterar </button>
-                <a href="{% url 'remover_categoria' item.id %}" class="btn btn-danger" 
-                onclick="return confirm('Tem certeza que deseja remover este registro?');">Excluir</a>
+                <button onclick="location.href='{% url "detalhes_categoria" item.id %}'" class="btn btn-info">Detalhes</button>
+                
+                <button onclick="location.href='{% url "editar_categoria" item.id %}'" class="btn btn-warning">Alterar</button>
+                
+                <a href="{% url 'remover_categoria' item.id %}" 
+                   class="btn btn-danger" 
+                   onclick="return confirm('Tem certeza que deseja remover este registro?');">Excluir</a>
             </td> 
         </tr>
         {% endfor %}
      </tbody>
-
 </table>
-
-   
-      
 
 {% endblock %}

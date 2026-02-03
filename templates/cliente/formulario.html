@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block titulo_conteudo %} Formulário de Clientes {% endblock %}
+
+{% block conteudo %}
+<div class="col-md-12">
+    <form method="post">
+        {% csrf_token %}
+        
+        {{ form.non_field_errors }}
+
+        <div class="mb-4">
+            <label for="id_nome" class="form-label">Nome:</label>
+            {{ form.nome }}
+            {{ form.nome.errors }}
+        </div>
+
+        <div class="mb-4">
+            <label for="id_cpf" class="form-label">CPF:</label>
+            {{ form.cpf }}
+            {{ form.cpf.errors }}
+        </div>
+
+        <div class="mb-4">
+            <label for="id_datanasc" class="form-label">Data de Nascimento:</label>
+            {{ form.datanasc }}
+            {{ form.datanasc.errors }}
+        </div>
+
+        <button class="btn btn-primary" type="submit">Salvar</button>
+    </form>
+</div>
+{% endblock %}
